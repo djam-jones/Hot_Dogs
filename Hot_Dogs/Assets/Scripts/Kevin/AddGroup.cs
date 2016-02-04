@@ -2,26 +2,35 @@
 using System.Collections;
 
 public class AddGroup : MonoBehaviour {
+	
     [SerializeField]
     private float speed;
     private bool falling = true;
-    private movement mof;
-    // Use this for initialization
+	private PlayerNumber hotDogNr;
+
+
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Base")
+		if (other.gameObject.tag == Tags.PLAYERTAG)
         {
             gameObject.AddComponent<Rigidbody2D>();
-            if(gameObject.GetComponent<movement>() as movement == null)
+			if(gameObject.GetComponent<DogMovement>() as DogMovement == null)
             {
-                gameObject.AddComponent<movement>();
+				if(other.gameObject.GetComponent<DogMovement>().dogNr == 1)
+					hotDogNr = PlayerNumber.PlayerOne;
+				else if(other.gameObject.GetComponent<DogMovement>().dogNr == 2)
+					hotDogNr = PlayerNumber.PlayerTwo;
+
+				//hotDogNr = other.gameObject.GetComponent<DogMovement>().playerNr;
+				gameObject.AddComponent<DogMovement>();
             }
 
             falling = false;
-            tag = "Base";
+			tag = Tags.PLAYERTAG;
 
         }
     }
+
     void Update()
     {
         if (falling == true)

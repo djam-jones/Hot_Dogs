@@ -16,7 +16,7 @@ public class SpawnProj : MonoBehaviour {
         {
             for (int i = 0; i < 2; i++)
             {
-                randomvector = new Vector3(Random.Range(-10, 10), 10, -8);
+                randomvector = new Vector3(Random.Range(-5, 5), 10, -8);
                 Instantiate(prefab, randomvector, transform.rotation);
                 timer = 5;
             }

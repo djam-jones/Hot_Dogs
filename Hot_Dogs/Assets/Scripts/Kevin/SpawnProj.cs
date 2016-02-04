@@ -3,23 +3,29 @@ using System.Collections;
 
 public class SpawnProj : MonoBehaviour {
     [SerializeField]
-    private GameObject prefab;
-    private Vector3 randomvector;
-    private float timer = 5;
+    //The hotDog
+    private GameObject _prefab;
+    //spawn on right side
+    private Vector3 _randomVectorA;
+    //spawn left side
+    private Vector3 _randomVectorB;
+    //timer for hotdogs to spawn
+    private float _timer = 1;
+    //timer how long the game is
+    private float _gameTimer;
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(timer);
-        timer -= Time.deltaTime;
-        if (timer < 0)
-        {
-            for (int i = 0; i < 2; i++)
-            {
-                randomvector = new Vector3(Random.Range(-5, 5), 10, -8);
-                Instantiate(prefab, randomvector, transform.rotation);
-                timer = 5;
-            }
+        _gameTimer += Time.deltaTime;
+        _timer -= Time.deltaTime;
+        if (_timer < 0)
+        { 
+            _randomVectorA = new Vector3(Random.Range(1, 5), 10, -8);
+            _randomVectorB = new Vector3(Random.Range(-5, -1), 10, -8);
+            Instantiate(_prefab, _randomVectorA, transform.rotation);
+            Instantiate(_prefab, _randomVectorB, transform.rotation);
+            _timer = 1 - (Mathf.Round(_gameTimer)/ 1000);
         }
     }
 

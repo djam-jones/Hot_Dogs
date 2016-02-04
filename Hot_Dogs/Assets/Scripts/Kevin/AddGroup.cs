@@ -14,22 +14,21 @@ public class AddGroup : MonoBehaviour {
 		if (other.gameObject.tag == Tags.PLAYERTAG)
         {
             gameObject.AddComponent<Rigidbody2D>();
-			if(gameObject.GetComponent<DogMovement>() as DogMovement == null)
-            {
-				if(other.gameObject.GetComponent<DogMovement>().dogNr == 1)
-					hotDogNr = PlayerNumber.PlayerOne;
-				else if(other.gameObject.GetComponent<DogMovement>().dogNr == 2)
-					hotDogNr = PlayerNumber.PlayerTwo;
-
-				//hotDogNr = other.gameObject.GetComponent<DogMovement>().playerNr;
-				gameObject.AddComponent<DogMovement>();
-            }
+			gameObject.GetComponent<Rigidbody2D>().mass = 0.3f;
 
             falling = false;
 			tag = Tags.PLAYERTAG;
 
         }
     }
+
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.gameObject.tag == Tags.BORDERTAG)
+		{
+			Destroy(gameObject);
+		}
+	}
 
     void Update()
     {

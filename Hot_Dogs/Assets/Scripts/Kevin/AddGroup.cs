@@ -47,7 +47,7 @@ public class AddGroup : MonoBehaviour {
     {
 		if (other.gameObject.tag == Tags.PLAYERTAG)
         {
-            if (gameObject.GetComponent<Rigidbody2D>() != null)
+            if (gameObject.GetComponent<Rigidbody2D>() == null)
             {
                 gameObject.AddComponent<Rigidbody2D>();
                 gameObject.GetComponent<Rigidbody2D>().mass = 0.3f;
@@ -63,6 +63,7 @@ public class AddGroup : MonoBehaviour {
         if (other.gameObject.tag == Tags.BORDERTAG)
         {
             StartCoroutine(Bounce());
+            Destroy(GetComponent<PolygonCollider2D>());
         }
     }
 
@@ -73,6 +74,12 @@ public class AddGroup : MonoBehaviour {
             transform.position -= new Vector3(0, speed, 0);
             speed += 0.001f;
         }
+
+        if (alphacolor < 0.01 || transform.position.y < -7)
+        {
+            Destroy(gameObject);
+        }
+
         if (Fade == true)
         {
             alphacolor -= 1f * Time.deltaTime;
@@ -90,9 +97,6 @@ public class AddGroup : MonoBehaviour {
         speed = 0.1f;
         Fade = true;
         
-        if (alphacolor < 0.01)
-        {
-            Destroy(gameObject);
-        }
+       
     }
 }

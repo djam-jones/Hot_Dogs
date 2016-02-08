@@ -65,7 +65,7 @@ public class SpacemanMovement : MonoBehaviour {
 		float y = movingForceY * Time.deltaTime;
 		float z = rotationForce * Time.deltaTime;
 
-		_rigid2D.AddRelativeForce(new Vector2(x, y));
+		_rigid2D.AddForce(new Vector2(x, y));
 		transform.Rotate(new Vector3(0, 0, z));
 	}
 

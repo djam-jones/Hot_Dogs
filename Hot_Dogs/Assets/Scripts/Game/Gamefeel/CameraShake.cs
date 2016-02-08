@@ -3,43 +3,42 @@ using System.Collections;
 
 public class CameraShake : MonoBehaviour {
 
-	private GameObject _playerOneCameraTransform;
-	private GameObject _playerTwoCameraTransform;
+	private GameObject _mainCamera;
 
 	public float intensity = 0.6f;
 	public float shakeTime = 0.0f;
 
 	private float _descreaseFactor = 1.0f;
 
-	private Vector3 _originPositionCameraOne;
-	private Vector3 _originPositionCameraTwo;
+	private Vector3 _originPositionCamera;
 
 	void Awake()
 	{
-		_playerOneCameraTransform = GameObject.Find("Camera Player One");
-		_playerTwoCameraTransform = GameObject.Find("Camera Player Two");
+		_mainCamera = GameObject.Find("Main Camera");
 	}
 
 	void OnEnable()
 	{
-		_originPositionCameraOne = _playerOneCameraTransform.transform.localPosition;
-		_originPositionCameraTwo = _playerTwoCameraTransform.transform.localPosition;
+		_originPositionCamera = _mainCamera.transform.localPosition;
 	}
 
 	void Update()
 	{
+
+	}
+
+	public void Shake()
+	{
 		if(shakeTime > 0)
 		{
-			_playerOneCameraTransform.transform.localPosition = _originPositionCameraOne + Random.insideUnitSphere * intensity;
-			_playerTwoCameraTransform.transform.localPosition = _originPositionCameraTwo + Random.insideUnitSphere * intensity;
+			_mainCamera.transform.localPosition = _originPositionCamera + Random.insideUnitSphere * intensity;
 
 			shakeTime -= Time.deltaTime * _descreaseFactor;
 		}
 		else
 		{
 			shakeTime = 0f;
-			_playerOneCameraTransform.transform.localPosition = _originPositionCameraOne;
-			_playerTwoCameraTransform.transform.localPosition = _originPositionCameraTwo;
+			_mainCamera.transform.localPosition = _originPositionCamera;
 		}
 	}
 		

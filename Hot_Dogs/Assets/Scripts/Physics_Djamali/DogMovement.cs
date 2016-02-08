@@ -12,15 +12,6 @@ public class DogMovement : MonoBehaviour {
 	//An Enumerator to select what player number this gameObject is.
 	public PlayerNumber playerNr;
 
-	//A script to limit the movement of the player to their specified camera.
-	private CameraMovementLimits _camMoveLimits;
-
-	private Camera _cameraOne; //Camera for Player One.
-	private Camera _cameraTwo; //Camera for Player Two.
-
-	[HideInInspector] 
-	public int dogNr;
-
 	//Rigidbody 2D.
 	private Rigidbody2D _rigid2D;
 
@@ -38,23 +29,29 @@ public class DogMovement : MonoBehaviour {
 
 	private float _movingForce = 6f;
 
+	private bool _walking;
+	private bool _facingRight;
+
+	Animator[] _dogPartsAnims;
+
+	Animator _dogHeadAnim;
+	Animator _dogBodyAnim;
+
+
 	void Awake()
 	{
-//		_cameraOne = GameObject.Find("Camera Player One").GetComponent<Camera>();
-//		_cameraTwo = GameObject.Find("Camera Player Two").GetComponent<Camera>();
-		//_camMoveLimits.GetComponent<CameraMovementLimits>();
+		_dogPartsAnims = GetComponentsInChildren<Animator>();
+
+		_dogHeadAnim = _dogPartsAnims[0].GetComponentInChildren<Animator>();
+		_dogBodyAnim = _dogPartsAnims[1].GetComponentInChildren<Animator>();
 
 		_rigid2D = GetComponent<Rigidbody2D>(); //Get Rigidbody2D Component.
 		SetKeyCodes(); //Set The Keycodes from the Awakening.
-		//SetPlayerCamera(); //Set The Player's specified Camera.
 	}
 
 	void Update()
 	{
 		Movement();
-
-		//Get The Clamped Movement within the screen borders.
-		_camMoveLimits.ClampedMovement();
 	}
 
 	/// <summary>
@@ -64,20 +61,30 @@ public class DogMovement : MonoBehaviour {
 	{
 		if(Input.GetKey(_controlLeft))
 		{
-			_rigid2D.AddForce(new Vector2(-_movingForce, 0)); //Add Force towards Left Side.
-			//transform.Translate(new Vector2(-_movingForce * Time.deltaTime, 0));
+			_walking = true;
 
-			//TODO: Do Animations.
-			//TODO: Flip Sprites to Right.
+			_rigid2D.AddForce(new Vector2(-_movingForce, 0)); //Add Force towards Left Side.
+
+			//Do Animations.
+			Animations();
+
+			//Flip Sprite to Left.
+			if(_facingRight)
+				FlipSprite();
 		}
 
 		if(Input.GetKey(_controlRight))
 		{
-			_rigid2D.AddForce(new Vector2(_movingForce, 0)); //Add Force towards Right Side.
-			//transform.Translate(new Vector2(_movingForce * Time.deltaTime, 0));
+			_walking = true;
 
-			//TODO: Do Animations.
-			//TODO: Flip Sprites to Left.
+			_rigid2D.AddForce(new Vector2(_movingForce, 0)); //Add Force towards Right Side.
+
+			//Do Animations.
+			Animations();
+
+			//Flip Sprite to Right.
+			if(!_facingRight)
+				FlipSprite();
 		}
 	}
 
@@ -91,28 +98,38 @@ public class DogMovement : MonoBehaviour {
 			_controlLeft = _playerOneControlLeft;
 			_controlRight = _playerOneControlRight;
 
-			dogNr = 1;
+			_facingRight = true;
 		}
 		else if(playerNr == PlayerNumber.PlayerTwo) //if Player is Two.
 		{
 			_controlLeft = _playerTwoControlLeft;
 			_controlRight = _playerTwoControlRight;
 
-			dogNr = 2;
+			_facingRight = false;
 		}
 	}
 
-//	public void SetPlayerCamera()
-//	{
-//
-//		if(playerNr == PlayerNumber.PlayerOne) //if Player is One.
-//		{
-//			_camMoveLimits.playerCamera = _cameraOne;
-//		}
-//		else if(playerNr == PlayerNumber.PlayerTwo) //if Player is Two.
-//		{
-//			_camMoveLimits.playerCamera = _cameraTwo;
-//		}
-//	}
+	private void Animations()
+	{
+		if(_walking)
+		{
+			_dogBodyAnim.SetTrigger("Go_Walk");
+			_dogHeadAnim.SetTrigger("Go_Walk");
+		}
+		else
+		{
+			_dogBodyAnim.SetTrigger("Go_Idle");
+			_dogHeadAnim.SetTrigger("Go_Idle");
+		}
+	}
+
+	private void FlipSprite()
+	{
+		_facingRight = !_facingRight;
+
+		Vector2 spriteScale = transform.localScale;
+		spriteScale.x *= -1;
+		transform.localScale = spriteScale;
+	}
 
 }

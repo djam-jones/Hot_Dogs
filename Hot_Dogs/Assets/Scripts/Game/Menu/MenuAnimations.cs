@@ -3,13 +3,13 @@ using System.Collections;
 
 public class MenuAnimations : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	public void IntroAnimation(Animator anim)
+	{
+		anim.SetTrigger("Intro");
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public void SwiffUpAnimation(Animator anim)
+	{
+		anim.SetTrigger("Swiff");
 	}
 }

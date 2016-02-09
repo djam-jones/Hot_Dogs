@@ -13,6 +13,7 @@ public class SpawnProj : MonoBehaviour {
     private float _timer = 1;
     //timer how long the game is
     private float _gameTimer;
+    private bool Spawn = true;
 
     // Update is called once per frame
     void Update()
@@ -23,10 +24,19 @@ public class SpawnProj : MonoBehaviour {
         { 
             _randomVectorA = new Vector3(Random.Range(1, 5), 10, -8);
             _randomVectorB = new Vector3(Random.Range(-5, -1), 10, -8);
-            Instantiate(_prefab, _randomVectorA, transform.rotation);
-            Instantiate(_prefab, _randomVectorB, transform.rotation);
+            if (Spawn == true)
+            {
+                Instantiate(_prefab, _randomVectorA, transform.rotation);
+                Instantiate(_prefab, _randomVectorB, transform.rotation);
+            }
             _timer = 1 - (Mathf.Round(_gameTimer)/ 1000);
         }
+
+    }
+
+    public void StopSpawn()
+    {
+            Spawn = false;
     }
 
     }

@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour {
 	private MenuAnimations _menuAnimsScript;
 	private Animator _menuAnim;
 	private Animator _cometDogAnim;
+	private Animator _cometDogAnim2;
 
 	void Awake()
 	{
@@ -14,6 +15,7 @@ public class MainMenu : MonoBehaviour {
 		_menuAnim = _menuAnimsScript.GetComponent<Animator>();
 
 		_cometDogAnim = GameObject.Find("Comet Dog").GetComponent<Animator>();
+		_cometDogAnim2 = GameObject.Find("Comet Dog (1)").GetComponent<Animator>();
 	}
 
 	void OnLevelWasLoaded(int level)
@@ -30,6 +32,7 @@ public class MainMenu : MonoBehaviour {
 		//Loading Screen.
 
 		_menuAnimsScript.CometDogAnimation(_cometDogAnim);
+		_menuAnimsScript.CometDogAnimation(_cometDogAnim2);
 		_menuAnimsScript.IntroAnimation(_menuAnim);
 
 		Invoke("LoadGameScene", 4);

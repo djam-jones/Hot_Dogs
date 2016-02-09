@@ -54,7 +54,7 @@ public class AddGroup : MonoBehaviour {
             }
 
             falling = false;
-			tag = Tags.PLAYERTAG;
+            tag = Tags.PLAYERTAG;
         }
     }
 

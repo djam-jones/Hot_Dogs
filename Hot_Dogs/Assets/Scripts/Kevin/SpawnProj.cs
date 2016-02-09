@@ -10,6 +10,7 @@ public class SpawnProj : MonoBehaviour {
     //spawn left side
     private Vector3 _randomVectorB;
     //timer for hotdogs to spawn
+    [SerializeField]
     private float _timer = 1;
     //timer how long the game is
     private float _gameTimer;
@@ -29,7 +30,7 @@ public class SpawnProj : MonoBehaviour {
                 Instantiate(_prefab, _randomVectorA, transform.rotation);
                 Instantiate(_prefab, _randomVectorB, transform.rotation);
             }
-            _timer = 1 - (Mathf.Round(_gameTimer)/ 1000);
+            _timer = 1 - (Mathf.Round(_gameTimer)/10000);
         }
 
     }

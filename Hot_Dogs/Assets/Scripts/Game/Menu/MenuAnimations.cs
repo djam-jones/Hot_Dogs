@@ -12,4 +12,9 @@ public class MenuAnimations : MonoBehaviour {
 	{
 		anim.SetTrigger("Swiff");
 	}
+
+	public void CometDogAnimation(Animator anim)
+	{
+		anim.SetTrigger("Fly");
+	}
 }

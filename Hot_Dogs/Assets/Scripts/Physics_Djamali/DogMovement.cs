@@ -69,8 +69,8 @@ public class DogMovement : MonoBehaviour {
 			Animations();
 
 			//Flip Sprite to Left.
-			if(_facingRight)
-				FlipSprite();
+//			if(_facingRight)
+//				FlipSprite();
 		}
 
 		if(Input.GetKey(_controlRight))
@@ -83,8 +83,8 @@ public class DogMovement : MonoBehaviour {
 			Animations();
 
 			//Flip Sprite to Right.
-			if(!_facingRight)
-				FlipSprite();
+//			if(!_facingRight)
+//				FlipSprite();
 		}
 	}
 

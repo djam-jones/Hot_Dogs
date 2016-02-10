@@ -53,7 +53,7 @@ public class MainMenu : MonoBehaviour {
 		_menuAnimsScript.CometDogAnimation(_cometDogAnim2);
 		_menuAnimsScript.IntroAnimation(_menuAnim);
 
-		Invoke("LoadGameScene", 4);
+		Invoke("LoadGameScene", 3);
 	}
 
 	private void LoadGameScene()
